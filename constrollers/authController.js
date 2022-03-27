@@ -55,7 +55,7 @@ class AuthController {
   }
   async auth(req, res) {
     try {
-      const user = await User.findOne({ id: req.user._id })
+      const user = await User.findOne({ _id: req.user.id })
       const token = generateAccessToken(user._id, user.roles)
       return res.json({ token, username: user.username })
     } catch (e) {
