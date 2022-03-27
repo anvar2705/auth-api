@@ -11,8 +11,7 @@ module.exports = function (req, res, next) {
     if (!token) {
       return res.status(403).json({ message: 'User is not registered' })
     }
-    const decodedData = jwt.verify(token, secret)
-    req.user = decodedData
+    req.user = jwt.verify(token, secret)
     next()
   } catch (e) {
     console.log(e)

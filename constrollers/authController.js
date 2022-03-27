@@ -47,7 +47,17 @@ class AuthController {
         return res.status(400).json({ message: 'Wrong password' })
       }
       const token = generateAccessToken(user._id, user.roles)
-      return res.json(token)
+      return res.json({ token, username: user.username })
+    } catch (e) {
+      console.log(e)
+      res.status(400).json({ message: 'Login error' })
+    }
+  }
+  async auth(req, res) {
+    try {
+      const user = await User.findOne({ id: req.user._id })
+      const token = generateAccessToken(user._id, user.roles)
+      return res.json({ token, username: user.username })
     } catch (e) {
       console.log(e)
       res.status(400).json({ message: 'Login error' })
